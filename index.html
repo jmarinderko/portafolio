@@ -426,23 +426,131 @@
   .delay-4 { animation-delay: 0.55s; }
   .delay-5 { animation-delay: 0.7s; }
 
-  /* ── RESPONSIVE ── */
-  @media (max-width: 900px) {
-    #hero { grid-template-columns: 1fr; }
+  /* Hamburguesa - oculto en desktop, visible en móvil */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 110;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 24px; height: 2px;
+    background: var(--white);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  @media (max-width: 1024px) {
+    .projects-grid { grid-template-columns: repeat(2, 1fr); }
+    .stack-categories { grid-template-columns: repeat(2, 1fr); }
+    .hero-left { padding: 80px 40px 180px 60px; }
+    .hero-right { padding: 80px 40px 80px 24px; }
+  }
+
+  /* ── RESPONSIVE MOBILE ── */
+  @media (max-width: 768px) {
+
+    /* Nav: ocultar links, mostrar menú hamburguesa */
+    nav { padding: 0 20px; height: 56px; }
+    .nav-links { display: none; }
+    .nav-logo { font-size: 1.1rem; }
+    .nav-hamburger { display: flex; }
+
+    /* Menú abierto */
+    #main-nav.nav-mobile-open .nav-links {
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 56px; left: 0; right: 0;
+      background: rgba(13,27,42,0.98);
+      padding: 8px 0;
+      gap: 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      z-index: 99;
+    }
+    #main-nav.nav-mobile-open .nav-links li {
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    #main-nav.nav-mobile-open .nav-links a {
+      display: block; padding: 16px 24px;
+      font-size: 1rem; letter-spacing: 0.05em;
+    }
+
+    /* Hero */
+    #hero {
+      grid-template-columns: 1fr;
+      min-height: auto; padding-top: 56px;
+    }
     .hero-right { display: none; }
-    .hero-stats { right: 0; }
-    .projects-grid, .stack-categories, .contact-grid { grid-template-columns: 1fr; }
-    nav { padding: 0 24px; }
-    .nav-links { gap: 20px; }
-    .container { padding: 0 24px; }
-    .hero-left { padding: 80px 24px 160px; }
+    .hero-left { padding: 48px 20px 200px; }
+    .hero-name { font-size: 2.8rem; }
+    .hero-title { font-size: 0.95rem; }
+    .hero-desc { font-size: 0.9rem; }
+    .hero-ctas { flex-direction: column; gap: 12px; }
+    .btn-primary, .btn-outline { text-align: center; width: 100%; padding: 14px 20px; }
+    .hero-stats {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      flex-wrap: nowrap;
+    }
+    .hero-stat { padding: 16px 12px; }
+    .hero-stat-num { font-size: 1.5rem; }
+    .hero-stat-label { font-size: 0.68rem; }
+
+    /* Sections */
+    section { padding: 64px 0; }
+    .container { padding: 0 20px; }
+    .section-title { font-size: 1.8rem; }
+    .section-subtitle { font-size: 0.9rem; }
+
+    /* Grids → 1 columna */
+    .projects-grid { grid-template-columns: 1fr; gap: 20px; }
+    .stack-categories { grid-template-columns: 1fr; gap: 16px; }
+    .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+
+    /* Certificaciones grid */
+    #certificaciones > .container > div:last-child {
+      grid-template-columns: 1fr !important;
+    }
+
+    /* Project cards */
+    .project-card-body { padding: 20px; }
+    .project-card h3 { font-size: 1.1rem; }
+
+    /* Stack */
+    .stack-category { padding: 24px 20px; }
+
+    /* Timeline experiencia */
+    .exp-timeline { padding-left: 24px; }
+    .exp-item::before { left: -29px; }
+    .exp-date { margin-left: 0; width: 100%; margin-top: 4px; }
+    .exp-meta { flex-wrap: wrap; }
+    .exp-company { font-size: 1rem; }
+
+    /* Contacto */
+    .contact-info h3 { font-size: 1.2rem; }
+    .contact-links { gap: 12px; }
+    .btn-send { width: 100%; text-align: center; }
+
+    /* Footer */
+    footer { flex-direction: column; gap: 8px; text-align: center; padding: 20px; }
+  }
+
+  /* ── RESPONSIVE SMALL MOBILE ── */
+  @media (max-width: 380px) {
+    .hero-name { font-size: 2.2rem; }
+    .hero-stat { padding: 12px 8px; }
+    .hero-stat-num { font-size: 1.3rem; }
+    .hero-stat-label { font-size: 0.6rem; }
+    .section-title { font-size: 1.6rem; }
   }
 </style>
 </head>
 <body>
 
 <!-- NAV -->
-<nav>
+<nav id="main-nav">
   <div class="nav-logo">J<span>.</span>Marín</div>
   <ul class="nav-links">
     <li><a href="#proyectos">Proyectos</a></li>
@@ -451,6 +559,9 @@
     <li><a href="#experiencia">Experiencia</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
+  <div class="nav-hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -937,11 +1048,35 @@
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Menú hamburguesa móvil
+  const nav = document.getElementById('main-nav');
+  const hamburger = document.getElementById('hamburger');
+
+  hamburger.addEventListener('click', function(e) {
+    e.stopPropagation();
+    nav.classList.toggle('nav-mobile-open');
+  });
+
+  // Cerrar al hacer click fuera
+  document.addEventListener('click', function(e) {
+    if (!nav.contains(e.target)) {
+      nav.classList.remove('nav-mobile-open');
+    }
+  });
+
+  // Cerrar al hacer click en un link
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', function() {
+      nav.classList.remove('nav-mobile-open');
+    });
+  });
+
   // Smooth scroll
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
       e.preventDefault();
-      document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
     });
   });
 
