@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>José Marín – Full Stack Developer & Arquitecto de Sistemas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --navy-mid: #1A2E45;
+    --blue: #1E5FA8;
+    --blue-light: #2E7DD1;
+    --accent: #E8A020;
+    --accent-light: #F5C050;
+    --white: #F5F7FA;
+    --gray-100: #EEF1F5;
+    --gray-300: #C4CAD4;
+    --gray-500: #7A8799;
+    --text: #1A2E45;
+    --card-bg: #FFFFFF;
+    --section-alt: #F0F4F9;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(13,27,42,0.97);
+    backdrop-filter: blur(10px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px; height: 64px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700; font-size: 1.3rem;
+    color: var(--white);
+    letter-spacing: 0.02em;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    color: var(--gray-300); text-decoration: none;
+    font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em;
+    text-transform: uppercase; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    background: var(--navy);
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; gap: 0;
+    padding-top: 64px;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(30,95,168,0.12) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(30,95,168,0.12) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse 70% 70% at 60% 50%, black 0%, transparent 100%);
+  }
+  .hero-accent-bar {
+    position: absolute; left: 0; top: 20%; bottom: 20%;
+    width: 4px; background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+  }
+  .hero-left {
+    padding: 80px 64px 80px 80px;
+    position: relative; z-index: 2;
+  }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem; color: var(--accent);
+    letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block; width: 32px; height: 1px; background: var(--accent);
+  }
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    font-weight: 900; color: var(--white);
+    line-height: 1.08; margin-bottom: 16px;
+  }
+  .hero-name em { color: var(--accent); font-style: normal; }
+  .hero-title {
+    font-size: 1.1rem; color: var(--gray-300);
+    font-weight: 300; margin-bottom: 28px;
+  }
+  .hero-desc {
+    font-size: 1rem; color: var(--gray-500);
+    max-width: 440px; line-height: 1.75; margin-bottom: 44px;
+  }
+  .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent); color: var(--navy);
+    padding: 14px 32px; border: none; border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700; font-size: 0.9rem;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    cursor: pointer; text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--accent-light); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent; color: var(--white);
+    padding: 14px 32px; border: 1px solid rgba(255,255,255,0.25); border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500; font-size: 0.9rem; letter-spacing: 0.05em;
+    cursor: pointer; text-decoration: none;
+    transition: border-color 0.2s, color 0.2s, transform 0.15s;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+  .hero-stats {
+    position: absolute; bottom: 0; left: 0; right: 50%;
+    display: flex; border-top: 1px solid rgba(255,255,255,0.07);
+    background: rgba(255,255,255,0.03);
+  }
+  .hero-stat {
+    flex: 1; padding: 24px 32px;
+    border-right: 1px solid rgba(255,255,255,0.07);
+  }
+  .hero-stat:last-child { border-right: none; }
+  .hero-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 900; color: var(--accent);
+  }
+  .hero-stat-label { font-size: 0.78rem; color: var(--gray-500); margin-top: 2px; }
+
+  .hero-right {
+    position: relative; z-index: 2;
+    display: flex; align-items: center; justify-content: center;
+    padding: 80px 80px 80px 32px;
+  }
+  .hero-card {
+    background: var(--navy-mid);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 40px;
+    width: 100%; max-width: 380px;
+    position: relative;
+  }
+  .hero-card::before {
+    content: '';
+    position: absolute; top: -1px; left: 32px; right: 32px; height: 2px;
+    background: linear-gradient(to right, transparent, var(--accent), transparent);
+    border-radius: 2px;
+  }
+  .hero-card-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem; color: var(--gray-500);
+    letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 24px;
+  }
+  .hero-card-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    margin-bottom: 20px;
+  }
+  .hero-card-item:last-child { margin-bottom: 0; }
+  .hero-card-icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: rgba(30,95,168,0.2);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 1rem;
+  }
+  .hero-card-text strong {
+    display: block; color: var(--white); font-size: 0.9rem; font-weight: 500;
+  }
+  .hero-card-text span { font-size: 0.78rem; color: var(--gray-500); }
+
+  /* ── SECTION COMMONS ── */
+  section { padding: 100px 0; }
+  .container { max-width: 1160px; margin: 0 auto; padding: 0 48px; }
+  .section-header { text-align: center; margin-bottom: 64px; }
+  .section-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem; color: var(--accent);
+    letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    font-weight: 700; color: var(--navy);
+    line-height: 1.2;
+  }
+  .section-subtitle {
+    font-size: 1.05rem; color: var(--gray-500);
+    margin-top: 12px; max-width: 520px; margin-left: auto; margin-right: auto;
+  }
+  .divider-line {
+    width: 48px; height: 3px;
+    background: var(--accent);
+    margin: 20px auto 0;
+    border-radius: 2px;
+  }
+
+  /* ── PROJECTS ── */
+  #proyectos { background: var(--white); }
+  .projects-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+  }
+  .project-card {
+    background: var(--card-bg);
+    border: 1px solid var(--gray-100);
+    border-radius: 10px; overflow: hidden;
+    transition: transform 0.25s, box-shadow 0.25s;
+    position: relative;
+  }
+  .project-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 48px rgba(13,27,42,0.12);
+  }
+  .project-card-top {
+    height: 6px;
+    background: linear-gradient(to right, var(--blue), var(--accent));
+  }
+  .project-card-body { padding: 28px; }
+  .project-tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+  .project-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem; font-weight: 500;
+    padding: 4px 10px; border-radius: 3px;
+    background: var(--gray-100); color: var(--gray-500);
+    letter-spacing: 0.05em;
+  }
+  .project-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem; font-weight: 700; color: var(--navy);
+    margin-bottom: 10px;
+  }
+  .project-card p {
+    font-size: 0.9rem; color: var(--gray-500);
+    line-height: 1.65; margin-bottom: 24px;
+  }
+  .project-card-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 16px; border-top: 1px solid var(--gray-100);
+  }
+  .project-links { display: flex; gap: 12px; }
+  .project-link {
+    font-size: 0.8rem; font-weight: 600; color: var(--blue);
+    text-decoration: none; letter-spacing: 0.03em;
+    display: flex; align-items: center; gap: 5px;
+    transition: color 0.2s;
+  }
+  .project-link:hover { color: var(--accent); }
+  .project-status {
+    font-size: 0.72rem; font-weight: 500;
+    padding: 4px 10px; border-radius: 20px;
+  }
+  .status-active { background: #E8F5E9; color: #2E7D32; }
+  .status-private { background: #FFF8E1; color: #E65100; }
+
+  /* ── STACK ── */
+  #stack { background: var(--section-alt); }
+  .stack-categories {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+  }
+  .stack-category {
+    background: var(--card-bg);
+    border: 1px solid var(--gray-100);
+    border-radius: 10px; padding: 32px;
+  }
+  .stack-category h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem; font-weight: 700; color: var(--navy);
+    margin-bottom: 6px; display: flex; align-items: center; gap: 10px;
+  }
+  .stack-category-icon { font-size: 1.2rem; }
+  .stack-category-sub {
+    font-size: 0.78rem; color: var(--gray-500); margin-bottom: 20px;
+  }
+  .tech-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+  .tech-pill {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem; font-weight: 500;
+    padding: 6px 14px; border-radius: 4px;
+    background: var(--gray-100); color: var(--text);
+    border: 1px solid transparent;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .tech-pill:hover {
+    background: var(--navy); color: var(--white); border-color: var(--blue);
+  }
+  .tech-pill.highlight {
+    background: var(--navy); color: var(--accent);
+    border-color: rgba(232,160,32,0.3);
+  }
+
+  /* ── EXPERIENCE ── */
+  #experiencia { background: var(--white); }
+  .exp-timeline { position: relative; padding-left: 32px; }
+  .exp-timeline::before {
+    content: ''; position: absolute; left: 0; top: 8px; bottom: 0;
+    width: 2px; background: linear-gradient(to bottom, var(--blue), var(--gray-100));
+  }
+  .exp-item { position: relative; margin-bottom: 48px; }
+  .exp-item::before {
+    content: ''; position: absolute; left: -37px; top: 8px;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--blue); border: 2px solid var(--white);
+    box-shadow: 0 0 0 3px var(--blue);
+  }
+  .exp-item:first-child::before { background: var(--accent); box-shadow: 0 0 0 3px var(--accent); }
+  .exp-meta {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 8px; flex-wrap: wrap;
+  }
+  .exp-company {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem; font-weight: 700; color: var(--navy);
+  }
+  .exp-badge {
+    font-size: 0.7rem; font-weight: 600; padding: 3px 10px; border-radius: 3px;
+    background: var(--blue); color: var(--white); letter-spacing: 0.05em;
+  }
+  .exp-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem; color: var(--gray-500); margin-left: auto;
+  }
+  .exp-role {
+    font-size: 0.88rem; color: var(--blue); font-weight: 600; margin-bottom: 10px;
+  }
+  .exp-desc {
+    font-size: 0.9rem; color: var(--gray-500); line-height: 1.7; max-width: 680px;
+  }
+
+  /* ── CONTACT ── */
+  #contacto { background: var(--navy); }
+  #contacto .section-title { color: var(--white); }
+  #contacto .section-subtitle { color: var(--gray-300); }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start;
+  }
+  .contact-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 700; color: var(--white); margin-bottom: 16px;
+  }
+  .contact-info p { font-size: 0.95rem; color: var(--gray-300); line-height: 1.75; margin-bottom: 32px; }
+  .contact-links { display: flex; flex-direction: column; gap: 16px; }
+  .contact-link-item {
+    display: flex; align-items: center; gap: 14px;
+    text-decoration: none; color: var(--gray-300);
+    font-size: 0.9rem; transition: color 0.2s;
+  }
+  .contact-link-item:hover { color: var(--accent); }
+  .contact-link-icon {
+    width: 40px; height: 40px; border-radius: 8px;
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center; font-size: 1rem;
+    flex-shrink: 0; transition: background 0.2s, border-color 0.2s;
+  }
+  .contact-link-item:hover .contact-link-icon {
+    background: rgba(232,160,32,0.15); border-color: rgba(232,160,32,0.3);
+  }
+
+  /* FORM */
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem; color: var(--gray-500); letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .form-group input, .form-group textarea {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px; padding: 12px 16px;
+    color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
+    transition: border-color 0.2s, background 0.2s;
+    resize: vertical;
+  }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: var(--gray-500); }
+  .form-group input:focus, .form-group textarea:focus {
+    outline: none; border-color: var(--accent); background: rgba(232,160,32,0.05);
+  }
+  .form-group textarea { min-height: 130px; }
+  .btn-send {
+    background: var(--accent); color: var(--navy);
+    padding: 14px 32px; border: none; border-radius: 4px;
+    font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 0.9rem;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    cursor: pointer; transition: background 0.2s, transform 0.15s;
+    align-self: flex-start;
+  }
+  .btn-send:hover { background: var(--accent-light); transform: translateY(-2px); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 28px 48px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-copy { font-size: 0.8rem; color: var(--gray-500); }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; font-weight: 700; color: var(--white);
+  }
+  .footer-logo span { color: var(--accent); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { opacity: 0; animation: fadeUp 0.65s ease forwards; }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.25s; }
+  .delay-3 { animation-delay: 0.4s; }
+  .delay-4 { animation-delay: 0.55s; }
+  .delay-5 { animation-delay: 0.7s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    #hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-stats { right: 0; }
+    .projects-grid, .stack-categories, .contact-grid { grid-template-columns: 1fr; }
+    nav { padding: 0 24px; }
+    .nav-links { gap: 20px; }
+    .container { padding: 0 24px; }
+    .hero-left { padding: 80px 24px 160px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">J<span>.</span>Marín</div>
+  <ul class="nav-links">
+    <li><a href="#proyectos">Proyectos</a></li>
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#certificaciones">Certificaciones</a></li>
+    <li><a href="#experiencia">Experiencia</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-accent-bar"></div>
+
+  <div class="hero-left">
+    <div class="hero-eyebrow fade-up delay-1">Full Stack Developer</div>
+    <h1 class="hero-name fade-up delay-2">José<br><em>Marín</em></h1>
+    <p class="hero-title fade-up delay-3">Arquitecto de Sistemas · +11 años de experiencia</p>
+    <p class="hero-desc fade-up delay-4">
+      Desarrollador Full Stack con más de 11 años construyendo soluciones empresariales
+      en Chile y Latinoamérica. Especializado en arquitecturas .NET, Laravel, Angular y
+      ecosistemas Microsoft Azure.
+    </p>
+    <div class="hero-ctas fade-up delay-5">
+      <a href="#proyectos" class="btn-primary">Ver Proyectos</a>
+      <a href="#contacto" class="btn-outline">Contactar</a>
+    </div>
+  </div>
+
+  <div class="hero-right fade-up delay-3">
+    <div class="hero-card">
+      <div class="hero-card-label">// Actualmente</div>
+      <div class="hero-card-item">
+        <div class="hero-card-icon">🏢</div>
+        <div class="hero-card-text">
+          <strong>Konexa (IBM)</strong>
+          <span>Desarrollador Full Stack · Nov 2025</span>
+        </div>
+      </div>
+      <div class="hero-card-item">
+        <div class="hero-card-icon">📍</div>
+        <div class="hero-card-text">
+          <strong>Talcahuano, Chile</strong>
+          <span>Disponible para trabajo remoto</span>
+        </div>
+      </div>
+      <div class="hero-card-item">
+        <div class="hero-card-icon">🎓</div>
+        <div class="hero-card-text">
+          <strong>Ing. Computación e Informática</strong>
+          <span>IP Virginio Gómez · SCRUM Certified</span>
+        </div>
+      </div>
+      <div class="hero-card-item">
+        <div class="hero-card-icon">🌐</div>
+        <div class="hero-card-text">
+          <strong>Español nativo · Inglés técnico</strong>
+          <span>Clientes en Chile, Colombia, Argentina y México</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num">11+</div>
+      <div class="hero-stat-label">Años de experiencia</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">8+</div>
+      <div class="hero-stat-label">Empresas & clientes</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">4</div>
+      <div class="hero-stat-label">Países con clientes</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROYECTOS -->
+<section id="proyectos">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">// Portafolio</div>
+      <h2 class="section-title">Proyectos Destacados</h2>
+      <p class="section-subtitle">Sistemas reales construidos para empresas, gobiernos y clientes privados.</p>
+      <div class="divider-line"></div>
+    </div>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-card-top"></div>
+        <div class="project-card-body">
+          <div class="project-tag-row">
+            <span class="project-tag">TypeScript</span>
+            <span class="project-tag">React</span>
+            <span class="project-tag">Node.js</span>
+          </div>
+          <h3>MedicPro 2.0</h3>
+          <p>Plataforma de gestión médica de nueva generación, construida con TypeScript full-stack. Actualizada en 2026 con arquitectura moderna y separación de responsabilidades.</p>
+          <div class="project-card-footer">
+            <div class="project-links">
+              <a href="https://github.com/jmarinderko/medicpro2.0" target="_blank" class="project-link">↗ GitHub</a>
+            </div>
+            <span class="project-status status-active">Activo</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-card-top"></div>
+        <div class="project-card-body">
+          <div class="project-tag-row">
+            <span class="project-tag">PHP</span>
+            <span class="project-tag">Laravel</span>
+            <span class="project-tag">API REST</span>
+          </div>
+          <h3>GESTAG API</h3>
+          <p>API backend robusta desarrollada en Laravel para sistema de gestión empresarial. Arquitectura RESTful con autenticación, roles y módulos configurables.</p>
+          <div class="project-card-footer">
+            <div class="project-links">
+              <a href="https://github.com/jmarinderko/gestag-api" target="_blank" class="project-link">↗ GitHub</a>
+            </div>
+            <span class="project-status status-private">Privado</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-card-top"></div>
+        <div class="project-card-body">
+          <div class="project-tag-row">
+            <span class="project-tag">TypeScript</span>
+            <span class="project-tag">Angular</span>
+            <span class="project-tag">MIT License</span>
+          </div>
+          <h3>GESTAG Web</h3>
+          <p>Frontend completo del sistema de gestión empresarial. Interfaz angular moderna con componentes reutilizables, dashboards y reportes dinámicos.</p>
+          <div class="project-card-footer">
+            <div class="project-links">
+              <a href="https://github.com/jmarinderko/gestagweb" target="_blank" class="project-link">↗ GitHub</a>
+            </div>
+            <span class="project-status status-private">Privado</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-card-top"></div>
+        <div class="project-card-body">
+          <div class="project-tag-row">
+            <span class="project-tag">C#</span>
+            <span class="project-tag">.NET</span>
+            <span class="project-tag">Prueba técnica</span>
+          </div>
+          <h3>Prueba Técnica Carsales</h3>
+          <p>Solución técnica desarrollada en C# para proceso de selección. Demuestra dominio de patrones de diseño, clean code y arquitectura empresarial en .NET.</p>
+          <div class="project-card-footer">
+            <div class="project-links">
+              <a href="https://github.com/jmarinderko/PruebaTecnicaCarsales" target="_blank" class="project-link">↗ GitHub</a>
+            </div>
+            <span class="project-status status-active">Público</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-card-top"></div>
+        <div class="project-card-body">
+          <div class="project-tag-row">
+            <span class="project-tag">TypeScript</span>
+            <span class="project-tag">Angular 16</span>
+            <span class="project-tag">Node.js API</span>
+          </div>
+          <h3>Prueba Técnica – Full Stack</h3>
+          <p>Aplicación Full Stack con Angular 16 en el frontend y API REST con Node.js en el backend. Proyecto que demuestra arquitectura cliente-servidor, componentes reutilizables y manejo de estado.</p>
+          <div class="project-card-footer">
+            <div class="project-links">
+              <a href="https://github.com/jmarinderko/prueba-tecnica" target="_blank" class="project-link">↗ GitHub</a>
+            </div>
+            <span class="project-status status-active">Público</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-card-top"></div>
+        <div class="project-card-body">
+          <div class="project-tag-row">
+            <span class="project-tag">TypeScript</span>
+            <span class="project-tag">Backend</span>
+            <span class="project-tag">Ventas</span>
+          </div>
+          <h3>Gestión de Ventas Backend</h3>
+          <p>API backend orientada a módulos de ventas para PyME. Arquitectura escalable con TypeScript, gestión de inventario, clientes y reportería integrada.</p>
+          <div class="project-card-footer">
+            <div class="project-links">
+              <a href="https://github.com/jmarinderko/gestion-ven-ventas-backend" target="_blank" class="project-link">↗ GitHub</a>
+            </div>
+            <span class="project-status status-private">Privado</span>
+          </div>
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+</section>
+
+<!-- STACK -->
+<section id="stack">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">// Tecnologías</div>
+      <h2 class="section-title">Stack Tecnológico</h2>
+      <p class="section-subtitle">Herramientas y lenguajes con los que construyo soluciones de nivel empresarial.</p>
+      <div class="divider-line"></div>
+    </div>
+    <div class="stack-categories">
+
+      <div class="stack-category">
+        <h3><span class="stack-category-icon">⚙️</span> Backend</h3>
+        <p class="stack-category-sub">Lógica de negocio y APIs</p>
+        <div class="tech-pills">
+          <span class="tech-pill highlight">PHP / Laravel</span>
+          <span class="tech-pill highlight">C# / .NET</span>
+          <span class="tech-pill highlight">Java</span>
+          <span class="tech-pill">CodeIgniter</span>
+          <span class="tech-pill">Node.js</span>
+          <span class="tech-pill">REST APIs</span>
+          <span class="tech-pill">Oracle OSB</span>
+          <span class="tech-pill">Oracle OAG</span>
+        </div>
+      </div>
+
+      <div class="stack-category">
+        <h3><span class="stack-category-icon">🎨</span> Frontend</h3>
+        <p class="stack-category-sub">Interfaces y experiencia de usuario</p>
+        <div class="tech-pills">
+          <span class="tech-pill highlight">Angular</span>
+          <span class="tech-pill highlight">TypeScript</span>
+          <span class="tech-pill highlight">Vue.js</span>
+          <span class="tech-pill">JavaScript</span>
+          <span class="tech-pill">HTML / CSS</span>
+          <span class="tech-pill">Bootstrap</span>
+          <span class="tech-pill">jQuery</span>
+          <span class="tech-pill">Ionic</span>
+        </div>
+      </div>
+
+      <div class="stack-category">
+        <h3><span class="stack-category-icon">🗄️</span> Bases de Datos</h3>
+        <p class="stack-category-sub">Relacionales y no relacionales</p>
+        <div class="tech-pills">
+          <span class="tech-pill highlight">PostgreSQL</span>
+          <span class="tech-pill highlight">SQL Server</span>
+          <span class="tech-pill">MySQL</span>
+          <span class="tech-pill">Oracle DB</span>
+          <span class="tech-pill">MongoDB</span>
+          <span class="tech-pill">ETL</span>
+        </div>
+      </div>
+
+      <div class="stack-category">
+        <h3><span class="stack-category-icon">☁️</span> DevOps & Cloud</h3>
+        <p class="stack-category-sub">Infraestructura y despliegue</p>
+        <div class="tech-pills">
+          <span class="tech-pill highlight">Azure DevOps</span>
+          <span class="tech-pill highlight">CI/CD Pipelines</span>
+          <span class="tech-pill">GNU/Linux</span>
+          <span class="tech-pill">Git</span>
+          <span class="tech-pill">Python Azure</span>
+          <span class="tech-pill">PowerShell</span>
+        </div>
+      </div>
+
+      <div class="stack-category">
+        <h3><span class="stack-category-icon">📊</span> Datos & BI</h3>
+        <p class="stack-category-sub">Análisis y visualización</p>
+        <div class="tech-pills">
+          <span class="tech-pill highlight">Power BI</span>
+          <span class="tech-pill highlight">ETL / SSIS</span>
+          <span class="tech-pill">Oracle RightNow</span>
+          <span class="tech-pill">Scriptcase</span>
+          <span class="tech-pill">SOAP UI</span>
+        </div>
+      </div>
+
+      <div class="stack-category">
+        <h3><span class="stack-category-icon">🏅</span> Metodologías</h3>
+        <p class="stack-category-sub">Formas de trabajo</p>
+        <div class="tech-pills">
+          <span class="tech-pill highlight">SCRUM Certified</span>
+          <span class="tech-pill highlight">Arquitectura MVC</span>
+          <span class="tech-pill">Análisis de sistemas</span>
+          <span class="tech-pill">Trabajo bajo presión</span>
+          <span class="tech-pill">Platzi Online</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICACIONES -->
+<section id="certificaciones" style="background: var(--white); padding: 80px 0;">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">// Credenciales</div>
+      <h2 class="section-title">Certificaciones</h2>
+      <p class="section-subtitle">Formación formal y certificaciones que respaldan mi experiencia técnica.</p>
+      <div class="divider-line"></div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
+
+      <div style="background: var(--card-bg); border: 1px solid var(--gray-100); border-radius: 10px; padding: 28px; display: flex; gap: 18px; align-items: flex-start; transition: transform 0.25s, box-shadow 0.25s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 16px 40px rgba(13,27,42,0.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <div style="width: 48px; height: 48px; border-radius: 10px; background: linear-gradient(135deg, #0078D4, #005A9E); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0;">🪟</div>
+        <div>
+          <div style="font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px;">Microsoft</div>
+          <div style="font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 4px;">AZ-900: Azure Fundamentals</div>
+          <div style="font-size: 0.82rem; color: var(--gray-500);">Microsoft Azure · Fundamentos de nube</div>
+        </div>
+      </div>
+
+      <div style="background: var(--card-bg); border: 1px solid var(--gray-100); border-radius: 10px; padding: 28px; display: flex; gap: 18px; align-items: flex-start; transition: transform 0.25s, box-shadow 0.25s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 16px 40px rgba(13,27,42,0.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <div style="width: 48px; height: 48px; border-radius: 10px; background: linear-gradient(135deg, #009FDA, #006699); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0;">🔄</div>
+        <div>
+          <div style="font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px;">Scrum Alliance</div>
+          <div style="font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 4px;">SCRUM Developer</div>
+          <div style="font-size: 0.82rem; color: var(--gray-500);">ID Credencial: 56322681269142</div>
+        </div>
+      </div>
+
+      <div style="background: var(--card-bg); border: 1px solid var(--gray-100); border-radius: 10px; padding: 28px; display: flex; gap: 18px; align-items: flex-start; transition: transform 0.25s, box-shadow 0.25s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 16px 40px rgba(13,27,42,0.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <div style="width: 48px; height: 48px; border-radius: 10px; background: linear-gradient(135deg, #98CA3F, #5B8C00); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0;">🎓</div>
+        <div>
+          <div style="font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px;">Platzi</div>
+          <div style="font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 4px;">Cursos & Formación Continua</div>
+          <div style="font-size: 0.82rem; color: var(--gray-500);">Desarrollo web, backend, cloud y tecnologías modernas</div>
+        </div>
+      </div>
+
+      <div style="background: var(--card-bg); border: 1px solid var(--gray-100); border-radius: 10px; padding: 28px; display: flex; gap: 18px; align-items: flex-start; transition: transform 0.25s, box-shadow 0.25s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 16px 40px rgba(13,27,42,0.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <div style="width: 48px; height: 48px; border-radius: 10px; background: linear-gradient(135deg, #A435F0, #6c0ba9); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0;">📚</div>
+        <div>
+          <div style="font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px;">Udemy</div>
+          <div style="font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 4px;">Cursos Especializados</div>
+          <div style="font-size: 0.82rem; color: var(--gray-500);">Programación, bases de datos, DevOps y herramientas enterprise</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCIA -->
+<section id="experiencia">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">// Trayectoria</div>
+      <h2 class="section-title">Experiencia Laboral</h2>
+      <p class="section-subtitle">11 años construyendo software para empresas en Chile y Latinoamérica.</p>
+      <div class="divider-line"></div>
+    </div>
+    <div class="exp-timeline">
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <span class="exp-company">Konexa (IBM)</span>
+          <span class="exp-badge">Actual</span>
+          <span class="exp-date">Nov 2025 – Presente</span>
+        </div>
+        <div class="exp-role">Desarrollador Full Stack – Proyecto Migración</div>
+        <p class="exp-desc">Integración en proyecto de migración de sistemas con tecnologías Microsoft. Trabajo en entorno de consultoría IBM con estándares enterprise.</p>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <span class="exp-company">DataIntegra</span>
+          <span class="exp-date">Ene 2018 – Nov 2025</span>
+        </div>
+        <div class="exp-role">Arquitecto de Sistemas · Analista Desarrollador</div>
+        <p class="exp-desc">7 años como arquitecto y desarrollador principal. Diseño de soluciones end-to-end, análisis de sistemas y liderazgo técnico en múltiples proyectos empresariales.</p>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <span class="exp-company">Datco</span>
+          <span class="exp-date">Ene 2021 – (paralelo DataIntegra)</span>
+        </div>
+        <div class="exp-role">Análisis y Desarrollo de Sistemas</div>
+        <p class="exp-desc">Desarrollo con Laravel, Angular, .NET y Azure DevOps. Pipelines CI/CD automatizados, apps móviles IONIC, bases de datos relacionales y no relacionales, Power BI y ETL con SQL Server.</p>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <span class="exp-company">Acapomil – Escuela Politécnica Ejército de Chile</span>
+          <span class="exp-date">Abr – Dic 2020</span>
+        </div>
+        <div class="exp-role">Desarrollador de Sistemas Internos</div>
+        <p class="exp-desc">Desarrollo de sistemas internos para la escuela politécnica del Ejército de Chile.</p>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <span class="exp-company">STG Chile</span>
+          <span class="exp-date">Feb 2018 – Dic 2019</span>
+        </div>
+        <div class="exp-role">Desarrollador – Sistema WMS</div>
+        <p class="exp-desc">Desarrollo de sistema de gestión de almacenes (WMS) para STG Chile.</p>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <span class="exp-company">MPSoft</span>
+          <span class="exp-date">Jun 2016 – Ene 2018</span>
+        </div>
+        <div class="exp-role">Analista Desarrollador – Proyecto Omnichannel</div>
+        <p class="exp-desc">Clientes: Banco Falabella, Caja Los Andes, Fonasa, Davivienda (Colombia), AlMundo (Argentina, Perú, Colombia) y Sky (México). Oracle Services Bus, OAG, RightNow y Java.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">// Hablemos</div>
+      <h2 class="section-title">Contacto</h2>
+      <p class="section-subtitle">¿Tienes un proyecto o una oportunidad? Me interesa escucharte.</p>
+      <div class="divider-line"></div>
+    </div>
+    <div class="contact-grid">
+
+      <div class="contact-info">
+        <h3>Disponible para nuevos desafíos</h3>
+        <p>Busco tanto oportunidades de empleo como proyectos freelance. Con 11 años de experiencia en sistemas empresariales, puedo aportar desde el día uno.</p>
+        <div class="contact-links">
+          <a href="/cdn-cgi/l/email-protection#3d77505c4f5453135154475c505c7d5a505c5451135e5250" class="contact-link-item">
+            <div class="contact-link-icon">✉️</div>
+            <span><span class="__cf_email__" data-cfemail="82c8efe3f0ebecaceeebf8e3efe3c2e5efe3ebeeace1edef">[email&#160;protected]</span></span>
+          </a>
+          <a href="tel:+56933072967" class="contact-link-item">
+            <div class="contact-link-icon">📱</div>
+            <span>+569 3307 2967</span>
+          </a>
+          <a href="https://www.linkedin.com/in/jose-marin-23276151" target="_blank" class="contact-link-item">
+            <div class="contact-link-icon">🔗</div>
+            <span>linkedin.com/in/jose-marin-23276151</span>
+          </a>
+          <a href="https://github.com/jmarinderko" target="_blank" class="contact-link-item">
+            <div class="contact-link-icon">💻</div>
+            <span>github.com/jmarinderko</span>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <form class="contact-form" onsubmit="handleSubmit(event)">
+          <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" placeholder="Tu nombre completo" required>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" placeholder="tu@email.com" required>
+          </div>
+          <div class="form-group">
+            <label>Asunto</label>
+            <input type="text" placeholder="¿De qué se trata?" required>
+          </div>
+          <div class="form-group">
+            <label>Mensaje</label>
+            <textarea placeholder="Cuéntame tu proyecto o propuesta..." required></textarea>
+          </div>
+          <button type="submit" class="btn-send" id="send-btn">Enviar Mensaje</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="background:var(--navy);">
+  <div class="footer-copy">© 2026 José Marín Lizama · Todos los derechos reservados</div>
+  <div class="footer-logo">J<span>.</span>Marín</div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  // Intersection Observer for fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.project-card, .stack-category, .exp-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+
+  // Form
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById('send-btn');
+    btn.textContent = '¡Enviado! ✓';
+    btn.styl
